@@ -10,6 +10,7 @@ import UIKit
 
 class ProfileViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
+    @IBOutlet weak var background: UIImageView!
     @IBOutlet weak var avatar: UIImageView!
     @IBOutlet weak var tableView: UITableView!
     override func viewDidLoad() {
@@ -27,8 +28,14 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         self.avatar.layer.cornerRadius = self.avatar.frame.size.width / 2
         self.avatar.layer.masksToBounds = true
         
-//        self.view.backgroundColor = UIColor(patternImage: UIImage(named: "phong-canh.jpg")!)
+        // blur background
+        let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.Light)
+        let blurEffectView = UIVisualEffectView(effect: blurEffect)
+        blurEffectView.frame = background.bounds
+        blurEffectView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight] // for supporting device rotation
+        background.addSubview(blurEffectView)
         
+        // register cell
         self.tableView.registerNib(UINib(nibName: "CustomTableViewCell", bundle: nil), forCellReuseIdentifier: "CustomTableViewCell")
     }
 
@@ -52,7 +59,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let button = UIButton(frame: CGRectMake(tableView.frame.size.width-100, 0, 100, 50))
-        button.setTitleColor(UIColor.redColor(), forState: .Normal)
+        button.setTitleColor(UIColor(red: 221/255, green: 138/255, blue: 96/255, alpha: 1), forState: .Normal)
         button.setTitle("View All >", forState: .Normal)
         
         let label = UILabel(frame: CGRectMake(10, 0, 100, 50))
